@@ -140,5 +140,6 @@ connection.once('open', async () => {
 
     }; // ends first for loop    
 
-    console.log("Sucessfully seeded!");
+    console.log("🌱 Sucessfully seeded! 🌱");
+    process.exit(0); // exit
 });
