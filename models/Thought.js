@@ -29,7 +29,7 @@ const thoughtSchema = new Schema(
     }
 );
 
-userSchema.virtual('reactionCount').get(function(){ // virtual to get amount of how many reactions a thought has
+thoughtSchema.virtual('reactionCount').get(function(){ // virtual to get amount of how many reactions a thought has
     return this.reactions.length;
 });
 
