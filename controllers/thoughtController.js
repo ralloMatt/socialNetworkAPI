@@ -1,5 +1,4 @@
 const {Thought } = require('../models');
-const { ObjectId } = require('mongoose').Types;
 
 module.exports = {
 
@@ -80,4 +79,43 @@ module.exports = {
         }
     },
 
+        // Add a reaction
+        async addReaction(req, res) {
+            try {
+              const thought = await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $addToSet: { reactions: req.body } },
+                { runValidators: true, new: true }
+              );
+        
+              if (!thought) {
+                res.status(404).json({ message: 'No thought with this id!'});
+              }
+        
+              res.json(thought);
+            } 
+            catch (err) {
+              res.status(500).json(err);
+            }
+        },
+    
+        // Delete a reaction
+        async deleteReaction(req, res) {
+            try {
+              const thought = await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $pull: { reactions: { _id: req.params.reactionId } }},
+                { runValidators: true, new: true }
+              );
+        
+              if (!thought) {
+                res.status(404).json({ message: 'No thought with this id!'});
+              }
+        
+              res.json(thought);
+            } 
+            catch (err) {
+              res.status(500).json(err);
+            }
+        },
 };
